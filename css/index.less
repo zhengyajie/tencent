@@ -1,0 +1,378 @@
+/*reference:只是把对应文件中的变量或者方法引入使用,最后编译的时候不编译*/
+@import "reset";
+@import (reference) "public";
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #F4F4F4;
+  overflow: hidden;
+}
+
+/*--HEADER--*/
+/*
+ * LESS中会提供一些常用的方法
+ *   darken([color value],xxx%)：把之前的颜色加深
+ *   lighten([color value],xxx%)：把之前的颜色变浅
+ *   unit([value],[单位])：给一个值加单位，但是这个值之前有单位，则为去单位
+ */
+.header {
+  @H: 63;
+  height: unit(@H, px);
+  background: @color-white;
+  border-bottom: 1px solid darken(@color-border, 10%);
+
+  .content {
+    margin: 0 auto;
+    padding: 0 10px;
+    width: unit((@main-width)-20, px);
+
+    /*&:after {
+      /!*.content:after*!/
+      display: block;
+      content: '';
+      clear: both;
+    }*/
+
+    /*--LOGO--*/
+    .logo {
+      float: left;
+      margin-right: 60px;
+      width: 160px;
+      height: unit(@H, px);
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url("../img/kbs-logo.png") no-repeat center center;
+        font-size: 0;
+      }
+    }
+
+    /*--NAV--*/
+    .nav {
+      float: left;
+      li {
+        float: left;
+        a {
+          display: block;
+          width: 90px;
+          height: unit((@H)-4, px);
+          line-height: unit((@H)-4, px);
+          text-align: center;
+          font-size: 16px;
+          font-weight: 700;
+          color: @color-text;
+          border-top: 4px solid transparent;
+
+          &.bg {
+            color: @color-white;
+            background: @color-blue;
+          }
+
+          &:hover {
+            border-top-color: @color-blue;
+          }
+
+          &.liveQQ {
+            border-top: none;
+            width: unit(@H, px);
+            height: unit(@H, px);
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.downLoad {
+            position: relative;
+            .weChat {
+              position: absolute;
+              top: unit((@H)-4, px);
+              left: -15px;
+              z-index: 9999;
+              padding: 0 14px;
+              width: 92px;
+              height: 0;
+              overflow: hidden;
+              .transitionFn(@duration: .3s);
+              /*
+               让背景颜色变为半透明:
+                 ->rgba(255,255,255,0.5); 不兼容低版本浏览器(CSS3)
+                 ->opacity: 0.5; 可以实现效果,但是当前容器里面的子元素也都透明了
+                 ->给当前元素追加一个和容器一样大的层，追加的这个层有半透明的背景
+              */
+              &:after {
+                display: block;
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 9997;
+                width: 100%;
+                height: 100%;
+                background: @color-white;
+                opacity: 0.5;
+                filter: alpha(opacity=50);
+              }
+
+              img {
+                position: relative;
+                z-index: 9998;
+                display: block;
+                width: 92px;
+                height: 92px;
+              }
+
+              span {
+                position: relative;
+                z-index: 9998;
+                display: block;
+                line-height: 25px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: normal;
+                color: @color-text;
+              }
+            }
+
+            &:hover {
+              .weChat {
+                padding: 18px 14px;
+                height: 142px; //->auto:实现不了动画
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /*--LOGIN--*/
+    .login {
+      float: right;
+      margin-top: unit(((@H)-28)/2, px);
+      width: 46px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      font-size: 12px;
+      color: @color-white;
+      background: @color-blue;
+      border-radius: 3px;
+
+      &:hover {
+        background: darken(@color-blue, 10%);
+      }
+    }
+  }
+}
+
+/*--MAIN--*/
+.main {
+  margin: 20px auto;
+  width: unit(@main-width, px);
+  height: auto; //->HEIGHT=一屏幕的高度-HEADER的高度-上下MARGIN(40)
+
+  /*--MENU NAV--*/
+  .menuNav {
+    position: relative;
+    float: left;
+    width: 198px;
+    height: auto; //->HEIGHT=MAIN的高度-2
+    background: @color-white;
+    border: 1px solid @color-border;
+    overflow: hidden;
+
+    /*ul {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }*/
+
+    a {
+      position: relative;
+      display: block;
+      padding-left: 24px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: @color-text;
+      border-left: 4px solid transparent;
+
+      &:hover, &.bg {
+        color: @color-blue;
+        background: @color-blue-lighten;
+        border-left-color: @color-blue;
+      }
+
+      &.bg {
+        .arrow {
+          display: block;
+        }
+      }
+
+      .arrow {
+        display: none;
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        margin-top: -6px;
+        width: 0;
+        height: 0;
+        font-size: 0;
+        border: 6px solid transparent;
+        border-left-color: @color-blue;
+      }
+
+      .arrow:after {
+        .arrow;
+        display: block;
+        content: '';
+        right: -4px;
+        border-left-color: @color-blue-lighten;
+      }
+    }
+  }
+
+  /*--CON--*/
+  .con {
+    float: right;
+    width: 820px;
+    height: 100%; //->HEIGHT=MAIN的高度
+  }
+}
+
+/*--CALENDAR--*/
+.calendar {
+  @H: 80;
+  position: relative;
+  height: unit(@H, px);
+  background: @color-white;
+  border: 1px solid @color-border;
+
+  /*--按钮--*/
+  .btn {
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: unit(@H, px);
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -9px;
+      margin-left: -9px;
+      width: 0;
+      height: 0;
+      font-size: 0;
+      border: 9px solid transparent;
+    }
+    .arrow:after {
+      display: block;
+      content: '';
+      .arrow;
+    }
+
+    &.btnLeft {
+      left: 0;
+      .arrow {
+        margin-left: -13.5px;
+        border-right-color: #999;
+      }
+      .arrow:after {
+        margin-left: -7px;
+        border-right-color: @color-white;
+      }
+    }
+
+    &.btnRight {
+      right: 0;
+      .arrow {
+        margin-left: -4.5px;
+        border-left-color: #999;
+      }
+      .arrow:after {
+        margin-left: -11px;
+        border-left-color: @color-white;
+      }
+    }
+
+    &:hover {
+      &.btnLeft {
+        .arrow {
+          border-right-color: @color-blue;
+        }
+      }
+      &.btnRight {
+        .arrow {
+          border-left-color: @color-blue;
+        }
+      }
+    }
+  }
+
+  /*--内容--*/
+  .container {
+    position: relative;
+    margin: 0 24px;
+    height: unit(@H, px);
+    overflow: hidden;
+
+    .wrapper {
+      position: absolute;
+      left: 0;
+      top: unit(((@H)-70)/2, px);
+      width: 10000px;
+      height: 70px;
+
+      li {
+        float: left;
+        a {
+          display: block;
+          padding-top: 9px;
+          width: 110px;
+          height: 61px;
+
+          span {
+            display: block;
+            line-height: 27px;
+            text-align: center;
+            color: @color-text;
+            font-size: 16px;
+            &.week {
+              color: lighten(@color-text, 30%);
+            }
+          }
+
+          &:hover, &.bg {
+            background: @color-blue-lighten;
+            span {
+              color: @color-blue;
+              &.week {
+                color: @color-blue;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*--ISCROLL--*/
+.iScrollIndicator {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+
+
+
+
+
+
+
+

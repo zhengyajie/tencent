@@ -1,0 +1,20 @@
+@color-border: #EEE;
+@color-white: #FFF;
+@color-text: #555;
+@color-blue: #346AFF;
+@color-blue-lighten: #EFF3FF;
+
+@main-width: 1040;
+
+.transitionFn(@property:all,@duration:1s,@time-function:linear,@delay:0s) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -ms-transition: @arguments;
+  -o-transition: @arguments;
+  transition: @arguments;
+}
+
+/*
+.transitionFn();
+.transitionFn(@duration:.3s);
+*/

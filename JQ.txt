@@ -1,0 +1,47 @@
+JQ中的三个常用筛选方法：
+  children:在所有的子元素中进行查找
+  find:在所有的后代元素中进行查找
+  filter:首先获取一个集合,在集合中在进行二次筛选,同级查找
+
+JQ盒子模型的方法:
+  height:快捷获取高度
+  width:快捷获取宽度
+  innerHeight: ->JS:clientHeight
+  outerHeight: ->JS:offsetHeight
+  offset:获取当前元素距离BODY的左偏移和上偏移->{top:xxx,left:xxx}
+
+JQ选择器获取的结果都是类数组(JQ对象),如果没有获取到指定的元素它也是一个空集合,判断是否存在的时候需要通过判断LENGTH是否为零判断;
+JQ中获取集合中的某一项：
+  $link[0] / $link.get(0) : 获取的结果是一个JS对象
+  $link.eq(0) : 获取的结果是一个JQ对象
+
+==================================
+同源/非同源(跨域)
+  当前页面的URL地址(浏览器的地址栏中找)
+  请求数据的接口地址(后台在API文档中规定的获取数据地址)
+
+  三个维度：协议、域名、端口号
+  看一下两个地址的三个维度是否相同，如果都相同属于同源数据请求，我们使用AJAX技术；只要有一个不一样，就属于跨域数据请求，AJAX就解决不了这件事情了，需要使用非同源请求策略，一般最常用的是JSONP；
+
+JQ:
+$.ajax({
+    url: 'http://matchweb.sports.qq.com/kbs/calendar?columnId=100000',
+    type: 'get',
+    dataType: 'json',
+    success: function (result) {
+        console.log(result);
+    }
+});
+->这就是AJAX请求，但是如果把 dataType: 'jsonp'，此时就变为JSONP数据请求了
+
+
+
+
+
+
+
+
+
+
+
+
